@@ -1,2 +1,4 @@
 # SuperGodotController
- A 90's style 3d platformer controller for use in Godot 4
+##SuperGodotController is not currently in a usable state.
+A 90's style 3d platformer controller for use in Godot 4.
+
