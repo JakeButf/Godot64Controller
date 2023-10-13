@@ -10,12 +10,15 @@ public partial class PlatformerController : CharacterBody3D
 	[Export] public AnimationPlayer Anim;
 	[Export] public Node3D Model;
 
-    PlatformerState.PlayerStateEnumerator playerState;
+	PlatformerState.PlayerStateEnumerator playerState;
 	PlatformerState.PlayerActionStateEnumerator actionState;
+	PlatformerState.PlayerActionStateEnumerator lastActionState;
 	PlatformerPhysics Physics;
 
 	PlayerState currentState;
 	PlayerState lastFrameState;
+
+	al_debuginfo db;
 
 	
 	public override void _Ready()
@@ -32,7 +35,7 @@ public partial class PlatformerController : CharacterBody3D
 		currentState = PlatformerState.GetStateClass(actionState);
 
 		//State Specific Process
-		if (currentState != lastFrameState && lastFrameState != null)
+		if (actionState != lastActionState && lastFrameState != null)
 			currentState.Ready();
 		currentState.Process(this, (float)delta);
 		actionState = currentState.CheckStateSwitch();
@@ -46,5 +49,14 @@ public partial class PlatformerController : CharacterBody3D
 		Gimbal.Position = Gimbal.Position.Lerp(this.GlobalPosition, (float)delta * PlatformerData.CameraLerpFactor);
 
 		lastFrameState = currentState;
+		lastActionState = actionState;
+		Debug();
 	}
+
+    void Debug()
+    {
+        db = GetNode<al_debuginfo>("/root/AlDebuginfo");
+
+        db.debugInfo.Add(actionState.ToString());
+    }
 }

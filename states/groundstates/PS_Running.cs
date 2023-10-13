@@ -36,6 +36,9 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
             if (!PlatformerData.Grounded)
                 return PlatformerState.PlayerActionStateEnumerator.FALL;
 
+            if (PlatformerData.Grounded && !PlatformerInput.DirectionalInput())
+                return PlatformerState.PlayerActionStateEnumerator.IDLE;
+
             return PlatformerState.PlayerActionStateEnumerator.RUNNING;
         }
 

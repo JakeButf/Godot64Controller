@@ -18,5 +18,6 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float GroundedMoveSpeed = 6f;
         public static int JumpIterator = 0;
         public static float CameraLerpFactor = 3f;
+        public static float JumpForce = 3f;
     }
 }

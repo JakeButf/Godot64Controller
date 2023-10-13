@@ -40,6 +40,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Running();
                 case PlayerActionStateEnumerator.IDLE:
                     return new PS_Idle();
+                case PlayerActionStateEnumerator.JUMP:
+                    return new PS_Jump();
             }
 
             return null;
