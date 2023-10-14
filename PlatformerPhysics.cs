@@ -10,7 +10,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
     internal class PlatformerPhysics
     {
         readonly float gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity") * 2;
-
+        public Vector3 moveDirection;
         float gravityModifier = 1f;
         private PlatformerController player;
         private Vector3 velocity;
@@ -25,12 +25,35 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             gravityModifier = 1f; //Reset gravity changes
             velocity = copyVelocity();
 
-            if(PlatformerData.Grounded)
+            moveDirection = Vector3.Zero;
+            moveDirection.X = Input.GetAxis(PlatformerInput.RightAxis, PlatformerInput.LeftAxis);
+            moveDirection.Z = Input.GetAxis(PlatformerInput.BackAxis, PlatformerInput.ForwardAxis);
+            moveDirection = moveDirection.Rotated(Vector3.Up, player.Gimbal.Rotation.Y).Normalized();
+
+            if (PlatformerData.Grounded)
             {
-                calculateFriction(player.Velocity, PlatformerData.SurfaceFriction, 0f, delta);
+                calculateFriction(PlatformerData.Velocity, PlatformerData.SurfaceFriction, 0f, delta);
             }
-           
-            player.Velocity = velocity;
+            velocity = new Vector3(PlatformerData.Velocity.X, PlatformerData.Velocity.Y - (gravity * (float)delta * PlatformerData.GravityMod), PlatformerData.Velocity.Z);
+            PlatformerData.Velocity = velocity;
+        }
+
+        public void PhysicsTickProcess(float delta)
+        {
+            CheckForWall();
+        }
+
+        void CheckForWall()
+        {
+            player.WallDetector.TargetPosition = player.Model.GlobalTransform.Basis.Y * PlatformerData.WallDetectionLength;
+
+            if (player.WallDetector.IsColliding())
+            {
+                PlatformerData.IsWallDetected = true;
+                PlatformerData.WallNormal = player.WallDetector.GetCollisionNormal();
+            }
+            else
+                PlatformerData.IsWallDetected = false;
         }
 
         private Vector3 calculateFriction(Vector3 velocity, float friction, float stopSpeed, float delta)
@@ -57,7 +80,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 
         private Vector3 copyVelocity()
         {
-            return new Vector3(player.Velocity.X, player.Velocity.Y, player.Velocity.Z);
+            return new Vector3(PlatformerData.Velocity.X, PlatformerData.Velocity.Y, PlatformerData.Velocity.Z);
         }
 
     }

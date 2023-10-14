@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace n64proofofconcept.scripts.player.platformercontroller.states.groundstates
 {
-	internal class PS_Jump : PlayerState
+	internal class PS_DoubleJump : PlayerState
 	{
 		public void Ready()
 		{
-			PlatformerData.Velocity = new Vector3(PlatformerData.Velocity.X, PlatformerData.JumpForce, PlatformerData.Velocity.Z);
-			PlatformerData.JumpIterator = 1;
+			PlatformerData.Velocity = new Vector3(PlatformerData.Velocity.X, PlatformerData.JumpForce * 1.5f, PlatformerData.Velocity.Z);
+			PlatformerData.JumpIterator = 2;
         }
 
 		public void Process(PlatformerController player, float delta)
@@ -38,7 +38,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 			if (PlatformerData.Velocity.Y <= 0)
 				return PlatformerState.PlayerActionStateEnumerator.FALL;
 
-			return PlatformerState.PlayerActionStateEnumerator.JUMP;
+			return PlatformerState.PlayerActionStateEnumerator.DOUBLEJUMP;
 		}
 
 		public int Flags()
@@ -49,7 +49,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 
         public override string ToString()
         {
-            return "Jump";
+            return "DoubleJump";
         }
 
     }

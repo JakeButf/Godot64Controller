@@ -17,14 +17,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
         public void Process(PlatformerController player, float delta)
         {
             //Move Player
-            Vector3 moveDirection = Vector3.Zero;
-            moveDirection.X = Input.GetAxis(PlatformerInput.RightAxis, PlatformerInput.LeftAxis);
-            moveDirection.Z = Input.GetAxis(PlatformerInput.BackAxis, PlatformerInput.ForwardAxis);
-            moveDirection = moveDirection.Rotated(Vector3.Up, player.Gimbal.Rotation.Y).Normalized();
-            PlatformerData.Velocity = new Vector3(moveDirection.X * PlatformerData.GroundedMoveSpeed, PlatformerData.Velocity.Y, moveDirection.Z * PlatformerData.GroundedMoveSpeed);
-            //Turn player
-            Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
-            player.Model.Rotation = new Vector3(player.Model.Rotation.X, Mathf.LerpAngle(player.Model.Rotation.Y, lookDirection.Angle(), (float)delta * 12), player.Model.Rotation.Z);
+            
+            PlatformerData.Velocity = new Vector3(player.Physics.moveDirection.X * PlatformerData.GroundedMoveSpeed, PlatformerData.Velocity.Y, player.Physics.moveDirection.Z * PlatformerData.GroundedMoveSpeed);
         }
 
         public PlatformerState.PlayerActionStateEnumerator CheckStateSwitch()
@@ -46,7 +40,13 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
         {
             return PlayerState.ACT_FLAG_MOVING |
                    PlayerState.ACT_FLAG_ALLOW_FIRST_PERSON |
-                   PlayerState.ACT_FLAG_PAUSE_EXIT;
+                   PlayerState.ACT_FLAG_PAUSE_EXIT |
+                   PlayerState.ACT_FLAG_ALLOW_MODEL_ROTATION;
+        }
+
+        public override string ToString()
+        {
+            return "Running";
         }
     }
 }

@@ -15,6 +15,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 
         public void Process(PlatformerController player, float delta)
         {
+            PlatformerData.Velocity = new Vector3(0, PlatformerData.Velocity.Y, 0);
         }
 
         public PlatformerState.PlayerActionStateEnumerator CheckStateSwitch()
@@ -33,6 +34,11 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
                    PlayerState.ACT_FLAG_IDLE |
                    PlayerState.ACT_FLAG_ALLOW_FIRST_PERSON |
                    PlayerState.ACT_FLAG_PAUSE_EXIT;
+        }
+
+        public override string ToString()
+        {
+            return "Idle";
         }
             
     }

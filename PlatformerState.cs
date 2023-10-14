@@ -1,5 +1,6 @@
 ﻿using n64proofofconcept.scripts.player.platformercontroller.states;
 using n64proofofconcept.scripts.player.platformercontroller.states.groundstates;
+using n64proofofconcept.scripts.player.platformercontroller.states.airstates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,9 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             JUMP,
             DOUBLEJUMP,
             TRIPLEJUMP,
-            FALL
+            FALL,
+            WALLHUG,
+            WALLKICK
         }
         public static PlayerState GetStateClass(PlayerActionStateEnumerator state)
         {
@@ -42,6 +45,16 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Idle();
                 case PlayerActionStateEnumerator.JUMP:
                     return new PS_Jump();
+                case PlayerActionStateEnumerator.DOUBLEJUMP:
+                    return new PS_DoubleJump();
+                case PlayerActionStateEnumerator.TRIPLEJUMP:
+                    return new PS_TripleJump();
+                case PlayerActionStateEnumerator.FALL:
+                    return new PS_Fall();
+                case PlayerActionStateEnumerator.WALLHUG:
+                    return new PS_Wallhug();
+                case PlayerActionStateEnumerator.WALLKICK:
+                    return new PS_Wallkick();
             }
 
             return null;

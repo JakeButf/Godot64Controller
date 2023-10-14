@@ -24,6 +24,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states
         public const int ACT_FLAG_CONTROL_JUMP_HEIGHT        = 0x00200000;
         public const int ACT_FLAG_ALLOW_FIRST_PERSON         = 0x00400000;
         public const int ACT_FLAG_PAUSE_EXIT                 = 0x00800000;
+        public const int ACT_FLAG_ALLOW_MODEL_ROTATION       = 0x01000000;
 
 
         public void Ready();
@@ -31,5 +32,6 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states
         public PlayerActionStateEnumerator CheckStateSwitch();
 
         public int Flags();
+        public string ToString();
     }
 }
