@@ -27,7 +27,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
 				return PlatformerState.PlayerActionStateEnumerator.IDLE;
 			if (PlatformerData.IsWallDetected)
 				return PlatformerState.PlayerActionStateEnumerator.WALLHUG;
-			if (Input.IsActionJustPressed(PlatformerInput.DiveAxis))
+			if (Input.IsActionJustPressed(PlatformerInput.DiveAxis) && !PlatformerData.DiveUsed)
 				return PlatformerState.PlayerActionStateEnumerator.DIVING;
 			return PlatformerState.PlayerActionStateEnumerator.FALL;
 		}

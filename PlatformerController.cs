@@ -44,8 +44,10 @@ public partial class PlatformerController : CharacterBody3D
 
 		//Timer Calls
 		PlatformerTimer.ProcessTimers((float)delta);
-		if(!PlatformerData.Grounded)
+		if (!PlatformerData.Grounded)
 			PlatformerData.GroundTimer.Reset();
+		else
+			PlatformerData.DiveUsed = false;
 
 		if (PlatformerData.GroundTimer.time > PlatformerData.JumpModWindow)
 			PlatformerData.JumpIterator = 0;
@@ -92,9 +94,8 @@ public partial class PlatformerController : CharacterBody3D
 	{
 		if((currentState.Flags() & PlayerState.ACT_FLAG_ALLOW_MODEL_ROTATION) != 0)
 		{
-            //Turn player
-            Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
-            this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * 12), this.Model.Rotation.Z);
+			//Turn player
+			RotateToPlayerVelocity(delta);
         }
 
 		if((currentState.Flags() & PlayerState.ACT_FLAG_CONTROL_JUMP_HEIGHT) != 0 && !Input.IsActionPressed(PlatformerInput.JumpAxis))
@@ -102,6 +103,18 @@ public partial class PlatformerController : CharacterBody3D
 			PlatformerData.GravityMod += 1.2f;
 		}
 	}
+
+	public void RotateToPlayerVelocity(float delta)
+	{
+        Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
+        this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * 12), this.Model.Rotation.Z);
+    }
+
+	public void InstantRotateToPlayerVelocity()
+	{
+        Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
+		this.Model.Rotation = new Vector3(Model.Rotation.X, lookDirection.Angle(), Model.Rotation.Z);
+    }
 
     void Debug()
     {

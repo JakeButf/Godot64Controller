@@ -39,6 +39,9 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 				case PlatformerState.PlayerActionStateEnumerator.WALLKICK:
 					anim.Play("fall", 0.5); //TODO: wallkick animation
 					break;
+				case PlatformerState.PlayerActionStateEnumerator.DIVING:
+					anim.Play("dive", 0.5);
+					break;
             }
 		}
 	}

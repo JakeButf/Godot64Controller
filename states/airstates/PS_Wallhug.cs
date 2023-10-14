@@ -31,6 +31,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
                 return PlatformerState.PlayerActionStateEnumerator.IDLE;
             if (translateToFreefall)
                 return PlatformerState.PlayerActionStateEnumerator.WALLKICK;
+            if (!PlatformerData.IsWallDetected)
+                return PlatformerState.PlayerActionStateEnumerator.FALL;
             return PlatformerState.PlayerActionStateEnumerator.WALLHUG;
         }
 

@@ -55,6 +55,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Wallhug();
                 case PlayerActionStateEnumerator.WALLKICK:
                     return new PS_Wallkick();
+                case PlayerActionStateEnumerator.DIVING:
+                    return new PS_Dive();
             }
 
             return null;

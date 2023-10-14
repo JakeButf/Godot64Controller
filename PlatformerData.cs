@@ -17,6 +17,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float SurfaceFriction = 1f;
         public static float GroundedMoveSpeed = 6f;
         public static float MaxAirSpeed = 7f;
+        public static float MaxDiveSpeed = 14f;
         public static float AirControlFactor = 2f;
         public static float AirMoveSpeed = 3f;
         public static int JumpIterator = 0;
@@ -24,11 +25,14 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float JumpForce = 8f;
         public static float GravityMod = 1f;
         public static PlatformerTimer GroundTimer;
-        public static float JumpModWindow = .5f;
+        public static float JumpModWindow = .25f;
         public static bool IsWallDetected = false;
         public static Vector3 WallNormal;
         public static float HorizontalWallkickSpeed = 7f;
         public static float VerticalWallkickSpeed = 15f;
         public static float WallDetectionLength = 15f;
+        public static float HorizontalDiveSpeed = 7f;
+        public static float VerticalDiveSpeed = 9f;
+        public static bool DiveUsed = false;
     }
 }
