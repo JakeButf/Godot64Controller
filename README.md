@@ -1,6 +1,4 @@
 # Godot 64 Controller
-*Note: project is currently not in a usable state, check back for updates!*
-
 ## Overview
 
 This project aims to provide a solid foundation for 90's style 3D platformer games built with the Godot engine.
