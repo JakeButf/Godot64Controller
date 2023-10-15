@@ -5,7 +5,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
 {
 	internal class PS_Wallkick: PlayerState
 	{
-        public void Ready()
+        public void Ready(PlatformerController player)
         {
         }
 

@@ -13,6 +13,8 @@ public partial class PlatformerController : CharacterBody3D
 	[Export] public GpuParticles3D StepParticles;
 	[Export] public GpuParticles3D WallSlideParticles;
 	[Export] public GpuParticles3D SparkleParticles;
+	[Export] public CollisionShape3D Col_Normal;
+	[Export] public CollisionShape3D Col_Small;
 
 	internal PlatformerState.PlayerStateEnumerator playerState;
 	internal PlatformerState.PlayerActionStateEnumerator actionState;
@@ -59,7 +61,7 @@ public partial class PlatformerController : CharacterBody3D
 		//State Specific Process
 		if (currentState.ToString() != lastActionState)
 		{
-            currentState.Ready();
+            currentState.Ready(this);
         }
 
 
@@ -95,19 +97,34 @@ public partial class PlatformerController : CharacterBody3D
 		if((currentState.Flags() & PlayerState.ACT_FLAG_ALLOW_MODEL_ROTATION) != 0)
 		{
 			//Turn player
-			RotateToPlayerVelocity(delta);
+			RotateToPlayerVelocity(delta, 12);
         }
 
 		if((currentState.Flags() & PlayerState.ACT_FLAG_CONTROL_JUMP_HEIGHT) != 0 && !Input.IsActionPressed(PlatformerInput.JumpAxis))
 		{
 			PlatformerData.GravityMod += 1.2f;
 		}
+
+        DeactiveCollisions();
+        if ((currentState.Flags() & PlayerState.ACT_FLAG_SHORT_HITBOX) != 0)
+		{
+			this.Col_Small.Disabled = false;
+		} else
+		{
+            this.Col_Normal.Disabled = false;
+        }
 	}
 
-	public void RotateToPlayerVelocity(float delta)
+	public void DeactiveCollisions()
+	{
+		this.Col_Normal.Disabled = true;
+        this.Col_Small.Disabled = true;
+    }
+
+	public void RotateToPlayerVelocity(float delta, float speed)
 	{
         Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
-        this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * 12), this.Model.Rotation.Z);
+        this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * speed), this.Model.Rotation.Z);
     }
 
 	public void InstantRotateToPlayerVelocity()
@@ -121,5 +138,7 @@ public partial class PlatformerController : CharacterBody3D
         db = GetNode<al_debuginfo>("/root/AlDebuginfo");
 
         db.debugInfo.Add(actionState.ToString());
+		Vector3 hSpeed = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z);
+		db.debugInfo.Add(hSpeed.Length().ToString() + "u/s");
     }
 }

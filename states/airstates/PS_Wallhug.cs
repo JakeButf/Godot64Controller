@@ -6,7 +6,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
 	internal class PS_Wallhug: PlayerState
 	{
         bool translateToFreefall = false;
-        public void Ready()
+        public void Ready(PlatformerController player)
         {
         }
 

@@ -9,13 +9,14 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 {
     internal class PS_Idle: PlayerState
     {
-        public void Ready()
+        public void Ready(PlatformerController player)
         {
         }
 
         public void Process(PlatformerController player, float delta)
         {
-            PlatformerData.Velocity = new Vector3(0, PlatformerData.Velocity.Y, 0);
+            if(!PlatformerInput.DirectionalInput())
+                PlatformerData.Velocity = new Vector3(0, PlatformerData.Velocity.Y, 0);
         }
 
         public PlatformerState.PlayerActionStateEnumerator CheckStateSwitch()

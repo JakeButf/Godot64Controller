@@ -9,10 +9,15 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 {
 	internal class PS_DoubleJump : PlayerState
 	{
-		public void Ready()
+		public void Ready(PlatformerController player)
 		{
 			PlatformerData.Velocity = new Vector3(PlatformerData.Velocity.X, PlatformerData.JumpForce * 1.5f, PlatformerData.Velocity.Z);
 			PlatformerData.JumpIterator = 2;
+
+            //Prevent snapping to forward vector if jumping with no velocity
+            float horizontalSpeed = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z).Length();
+            if (horizontalSpeed > 0)
+                player.InstantRotateToPlayerVelocity();
         }
 
 		public void Process(PlatformerController player, float delta)

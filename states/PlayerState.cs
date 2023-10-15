@@ -27,7 +27,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states
         public const int ACT_FLAG_ALLOW_MODEL_ROTATION       = 0x01000000;
 
 
-        public void Ready();
+        public void Ready(PlatformerController player);
         public void Process(PlatformerController player, float delta);
         public PlayerActionStateEnumerator CheckStateSwitch();
 

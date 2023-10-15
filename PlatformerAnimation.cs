@@ -41,6 +41,11 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 					break;
 				case PlatformerState.PlayerActionStateEnumerator.DIVING:
 					anim.Play("dive", 0.5);
+					if (PlatformerData.Grounded)
+						player.StepParticles.Emitting = true;
+					break;
+				case PlatformerState.PlayerActionStateEnumerator.ROLLOUT:
+					anim.Play("rollout", 0.5);
 					break;
             }
 		}

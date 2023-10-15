@@ -15,8 +15,9 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static Vector3 Velocity;
         public static bool Grounded;
         public static float SurfaceFriction = 1f;
-        public static float GroundedMoveSpeed = 6f;
-        public static float MaxAirSpeed = 7f;
+        public static float GroundedMoveSpeed = 9f;
+        public static float TimeToReachMatchTopSpeed = 10f;
+        public static float MaxAirSpeed = 9f;
         public static float MaxDiveSpeed = 14f;
         public static float AirControlFactor = 2f;
         public static float AirMoveSpeed = 3f;
@@ -31,8 +32,12 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float HorizontalWallkickSpeed = 7f;
         public static float VerticalWallkickSpeed = 15f;
         public static float WallDetectionLength = 15f;
-        public static float HorizontalDiveSpeed = 7f;
-        public static float VerticalDiveSpeed = 9f;
+        public static float HorizontalDiveSpeed = 4.5f;
+        public static float VerticalDiveSpeed = 4f;
+        public static float TimeToKillSpeedFromDive = 2f;
         public static bool DiveUsed = false;
+        public static float HorizontalRolloutSpeed = 6.5f;
+        public static float VerticalRolloutSpeed = 8f;
+        public static Vector3 SavedHorizontalRolloutSpeed;
     }
 }

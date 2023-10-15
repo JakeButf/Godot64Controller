@@ -24,7 +24,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             NONE,
             DIVING,
             //GROUNDED STATES
-            AWAITINGROLLOUT,
+            ROLLOUT,
+            FASTROLLOUT,
             RUNNING,
             IDLE,
             //AIR STATES
@@ -57,6 +58,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Wallkick();
                 case PlayerActionStateEnumerator.DIVING:
                     return new PS_Dive();
+                case PlayerActionStateEnumerator.ROLLOUT:
+                    return new PS_Rollout();
             }
 
             return null;

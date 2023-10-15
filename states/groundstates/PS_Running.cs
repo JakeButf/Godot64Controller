@@ -9,15 +9,13 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 {
     internal class PS_Running : PlayerState
     {
-        public void Ready()
+        public void Ready(PlatformerController player)
         {
 
         }
 
         public void Process(PlatformerController player, float delta)
         {
-            //Move Player
-            
             PlatformerData.Velocity = new Vector3(player.Physics.moveDirection.X * PlatformerData.GroundedMoveSpeed, PlatformerData.Velocity.Y, player.Physics.moveDirection.Z * PlatformerData.GroundedMoveSpeed);
         }
 
