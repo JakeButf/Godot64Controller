@@ -12,6 +12,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         /// <summary>
         /// Fields
         /// </summary>
+        public static float PlayerHeight = 2f;
         public static Vector3 Velocity;
         public static bool Grounded;
         public static float SurfaceFriction = 1f;
@@ -28,6 +29,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static PlatformerTimer GroundTimer;
         public static float JumpModWindow = .25f;
         public static bool IsWallDetected = false;
+        public static bool CanLedgeGrab = false;
+        public static Vector3 LedgeCollisionPoint;
         public static Vector3 WallNormal;
         public static float HorizontalWallkickSpeed = 7f;
         public static float VerticalWallkickSpeed = 15f;
@@ -39,5 +42,6 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float HorizontalRolloutSpeed = 6.5f;
         public static float VerticalRolloutSpeed = 8f;
         public static Vector3 SavedHorizontalRolloutSpeed;
+        public static Transform3D SavedTransform;
     }
 }

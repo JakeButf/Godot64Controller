@@ -16,7 +16,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states
         public const int ACT_FLAG_SWIMMING                   = 0x00002000;
         public const int ACT_FLAG_SHORT_HITBOX               = 0x00004000;
         public const int ACT_FLAG_INVULNERABLE               = 0x00008000;
-        public const int ACT_FLAG_BUTT_OR_STOMACH_SLIDE      = 0x00010000;
+        public const int ACT_FLAG_ROTATE_NORMAL              = 0x00010000;
         public const int ACT_FLAG_DIVING                     = 0x00020000;
         public const int ACT_FLAG_HANGING                    = 0x00040000;
         public const int ACT_FLAG_IDLE                       = 0x00080000;
@@ -25,6 +25,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states
         public const int ACT_FLAG_ALLOW_FIRST_PERSON         = 0x00400000;
         public const int ACT_FLAG_PAUSE_EXIT                 = 0x00800000;
         public const int ACT_FLAG_ALLOW_MODEL_ROTATION       = 0x01000000;
+
 
 
         public void Ready(PlatformerController player);

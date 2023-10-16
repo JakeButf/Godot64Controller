@@ -34,7 +34,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             TRIPLEJUMP,
             FALL,
             WALLHUG,
-            WALLKICK
+            WALLKICK,
+            LEDGEGRAB
         }
         public static PlayerState GetStateClass(PlayerActionStateEnumerator state)
         {
@@ -60,6 +61,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Dive();
                 case PlayerActionStateEnumerator.ROLLOUT:
                     return new PS_Rollout();
+                case PlayerActionStateEnumerator.LEDGEGRAB:
+                    return new PS_LedgeGrab();
             }
 
             return null;

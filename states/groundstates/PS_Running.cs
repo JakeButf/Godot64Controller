@@ -16,7 +16,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.groundsta
 
         public void Process(PlatformerController player, float delta)
         {
-            PlatformerData.Velocity = new Vector3(player.Physics.moveDirection.X * PlatformerData.GroundedMoveSpeed, PlatformerData.Velocity.Y, player.Physics.moveDirection.Z * PlatformerData.GroundedMoveSpeed);
+            PlatformerData.Velocity = new Vector3(player.Physics.moveDirection.X * PlatformerData.GroundedMoveSpeed, 0, player.Physics.moveDirection.Z * PlatformerData.GroundedMoveSpeed);
         }
 
         public PlatformerState.PlayerActionStateEnumerator CheckStateSwitch()

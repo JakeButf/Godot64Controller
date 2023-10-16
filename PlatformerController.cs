@@ -10,6 +10,8 @@ public partial class PlatformerController : CharacterBody3D
 	[Export] public AnimationPlayer Anim;
 	[Export] public Node3D Model;
 	[Export] public RayCast3D WallDetector;
+	[Export] public RayCast3D LedgeDetector;
+	[Export] public RayCast3D LedgeHeightDetector;
 	[Export] public GpuParticles3D StepParticles;
 	[Export] public GpuParticles3D WallSlideParticles;
 	[Export] public GpuParticles3D SparkleParticles;
@@ -105,11 +107,15 @@ public partial class PlatformerController : CharacterBody3D
 			PlatformerData.GravityMod += 1.2f;
 		}
 
+
         DeactiveCollisions();
         if ((currentState.Flags() & PlayerState.ACT_FLAG_SHORT_HITBOX) != 0)
 		{
 			this.Col_Small.Disabled = false;
-		} else
+		} else if((currentState.Flags() & PlayerState.ACT_FLAG_INTANGIBLE) != 0)
+		{
+            //Leave collisions off
+        } else
 		{
             this.Col_Normal.Disabled = false;
         }
@@ -133,12 +139,20 @@ public partial class PlatformerController : CharacterBody3D
 		this.Model.Rotation = new Vector3(Model.Rotation.X, lookDirection.Angle(), Model.Rotation.Z);
     }
 
+	public void ApplyVerticalForce(float force)
+	{
+		PlatformerData.Velocity = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z);
+		this.actionState = PlatformerState.PlayerActionStateEnumerator.FALL;
+        currentState = PlatformerState.GetStateClass(actionState);
+        PlatformerData.Velocity += new Vector3(0, force, 0);
+	}
+
     void Debug()
     {
         db = GetNode<al_debuginfo>("/root/AlDebuginfo");
 
         db.debugInfo.Add(actionState.ToString());
 		Vector3 hSpeed = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z);
-		db.debugInfo.Add(hSpeed.Length().ToString() + "u/s");
+		//db.debugInfo.Add(hSpeed.Length().ToString() + "u/s");
     }
 }

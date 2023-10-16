@@ -22,7 +22,6 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 
         public void PhysicsProcess(float delta)
         {
-            gravityModifier = 1f; //Reset gravity changes
             velocity = copyVelocity();
 
             moveDirection = Vector3.Zero;
@@ -41,6 +40,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public void PhysicsTickProcess(float delta)
         {
             CheckForWall();
+            CheckForLedgeGrab();
         }
 
         void CheckForWall()
@@ -54,6 +54,41 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             }
             else
                 PlatformerData.IsWallDetected = false;
+        }
+
+        public void LookAtWithY(Vector3 normal)
+        {
+            //TODO
+        }
+
+        void CheckForLedgeGrab()
+        {
+            if (!PlatformerData.IsWallDetected)
+            {
+                PlatformerData.CanLedgeGrab = false;
+                return;
+            }
+
+            //Check if player is at a ledge
+            player.LedgeDetector.TargetPosition = player.Model.GlobalTransform.Basis.Y * (PlatformerData.WallDetectionLength * 1.25f);
+            if(!player.LedgeDetector.IsColliding())
+            {
+                //Look for ledge grab
+                //Check for height of the ledge
+                player.LedgeHeightDetector.TargetPosition = player.Model.GlobalTransform.Basis.Z * PlatformerData.WallDetectionLength;
+                if(player.LedgeHeightDetector.IsColliding() && player.LedgeHeightDetector.GetCollisionNormal() != PlatformerData.WallNormal)
+                {
+                    PlatformerData.CanLedgeGrab = true;
+                    PlatformerData.LedgeCollisionPoint = player.LedgeHeightDetector.GetCollisionPoint();
+                } else
+                {
+                    PlatformerData.CanLedgeGrab = false;
+                }
+            } else
+            {
+                PlatformerData.CanLedgeGrab = false;
+            }
+
         }
 
         private Vector3 calculateFriction(Vector3 velocity, float friction, float stopSpeed, float delta)

@@ -25,6 +25,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
 		{
 			if (PlatformerData.Grounded)
 				return PlatformerState.PlayerActionStateEnumerator.IDLE;
+			if (PlatformerData.CanLedgeGrab && PlatformerData.Velocity.Y < 0)
+				return PlatformerState.PlayerActionStateEnumerator.LEDGEGRAB;
 			if (PlatformerData.IsWallDetected)
 				return PlatformerState.PlayerActionStateEnumerator.WALLHUG;
 			if (Input.IsActionJustPressed(PlatformerInput.DiveAxis) && !PlatformerData.DiveUsed)

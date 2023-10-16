@@ -7,6 +7,10 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
 	{
         public void Ready(PlatformerController player)
         {
+            Vector3 kickVelocity = (PlatformerData.WallNormal * PlatformerData.HorizontalWallkickSpeed) + new Vector3(0, PlatformerData.VerticalWallkickSpeed, 0);
+            // Apply the calculated velocity
+            PlatformerData.Velocity = kickVelocity;
+            player.Model.RotateY(3.14159f);
         }
 
         public void Process(PlatformerController player, float delta)

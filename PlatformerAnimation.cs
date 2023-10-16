@@ -47,6 +47,9 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 				case PlatformerState.PlayerActionStateEnumerator.ROLLOUT:
 					anim.Play("rollout", 0.5);
 					break;
+                case PlatformerState.PlayerActionStateEnumerator.LEDGEGRAB:
+                    anim.Play("wallhug_001", 0.5); //TODO: Ledgegrab animation
+                    break;
             }
 		}
 	}
