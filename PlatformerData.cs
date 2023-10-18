@@ -43,5 +43,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
         public static float VerticalRolloutSpeed = 8f;
         public static Vector3 SavedHorizontalRolloutSpeed;
         public static Transform3D SavedTransform;
+        public static string PrismPath = "";
+        public static Node3D PrismCSObject;
+        public static PlatformerTimer PrismGetTimer;
     }
 }

@@ -34,17 +34,17 @@ public partial class PlatformerController : CharacterBody3D
 		actionState = PlatformerState.PlayerActionStateEnumerator.IDLE;
 		playerState = PlatformerState.PlayerStateEnumerator.FREE;
 		Physics = new PlatformerPhysics(this);
-        currentState = PlatformerState.GetStateClass(actionState);
+		currentState = PlatformerState.GetStateClass(actionState);
 		WallDetector.Enabled = true;
 
 		PlatformerData.GroundTimer = new PlatformerTimer();
-    }
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		//PlatformerData.Velocity = this.Velocity;
-        PlatformerData.Grounded = this.IsOnFloor();
+		PlatformerData.Grounded = this.IsOnFloor();
 
 		//Timer Calls
 		PlatformerTimer.ProcessTimers((float)delta);
@@ -56,25 +56,25 @@ public partial class PlatformerController : CharacterBody3D
 		if (PlatformerData.GroundTimer.time > PlatformerData.JumpModWindow)
 			PlatformerData.JumpIterator = 0;
 
-        actionState = currentState.CheckStateSwitch();
-        currentState = PlatformerState.GetStateClass(actionState);
+		actionState = currentState.CheckStateSwitch();
+		currentState = PlatformerState.GetStateClass(actionState);
 		
 
 		//State Specific Process
 		if (currentState.ToString() != lastActionState)
 		{
-            currentState.Ready(this);
-        }
+			currentState.Ready(this);
+		}
 
 
 		//Physics Calls
 		PlatformerData.GravityMod = 1f;
 
 
-        DoFlagActions((float)delta);
-        Physics.PhysicsProcess((float)delta);
+		DoFlagActions((float)delta);
+		Physics.PhysicsProcess((float)delta);
 
-        currentState.Process(this, (float)delta);
+		currentState.Process(this, (float)delta);
 
 		this.Velocity = PlatformerData.Velocity;
 		MoveAndSlide();
@@ -89,18 +89,18 @@ public partial class PlatformerController : CharacterBody3D
 		Debug();
 	}
 
-    public override void _PhysicsProcess(double delta)
-    {
+	public override void _PhysicsProcess(double delta)
+	{
 		Physics.PhysicsTickProcess((float)delta);
-    }
+	}
 
-    void DoFlagActions(float delta)
+	void DoFlagActions(float delta)
 	{
 		if((currentState.Flags() & PlayerState.ACT_FLAG_ALLOW_MODEL_ROTATION) != 0)
 		{
 			//Turn player
 			RotateToPlayerVelocity(delta, 12);
-        }
+		}
 
 		if((currentState.Flags() & PlayerState.ACT_FLAG_CONTROL_JUMP_HEIGHT) != 0 && !Input.IsActionPressed(PlatformerInput.JumpAxis))
 		{
@@ -108,51 +108,58 @@ public partial class PlatformerController : CharacterBody3D
 		}
 
 
-        DeactiveCollisions();
-        if ((currentState.Flags() & PlayerState.ACT_FLAG_SHORT_HITBOX) != 0)
+		DeactiveCollisions();
+		if ((currentState.Flags() & PlayerState.ACT_FLAG_SHORT_HITBOX) != 0)
 		{
 			this.Col_Small.Disabled = false;
 		} else if((currentState.Flags() & PlayerState.ACT_FLAG_INTANGIBLE) != 0)
 		{
-            //Leave collisions off
-        } else
+			//Leave collisions off
+		} else
 		{
-            this.Col_Normal.Disabled = false;
-        }
+			this.Col_Normal.Disabled = false;
+		}
+	}
+
+	public void GetPrism(string csItemPath)
+	{
+		PlatformerData.PrismPath = csItemPath;
+		this.actionState = PlatformerState.PlayerActionStateEnumerator.GOTITEM;
+		currentState = PlatformerState.GetStateClass(actionState);
 	}
 
 	public void DeactiveCollisions()
 	{
 		this.Col_Normal.Disabled = true;
-        this.Col_Small.Disabled = true;
-    }
+		this.Col_Small.Disabled = true;
+	}
 
 	public void RotateToPlayerVelocity(float delta, float speed)
 	{
-        Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
-        this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * speed), this.Model.Rotation.Z);
-    }
+		Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
+		this.Model.Rotation = new Vector3(this.Model.Rotation.X, Mathf.LerpAngle(this.Model.Rotation.Y, lookDirection.Angle(), (float)delta * speed), this.Model.Rotation.Z);
+	}
 
 	public void InstantRotateToPlayerVelocity()
 	{
-        Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
+		Vector2 lookDirection = new Vector2(PlatformerData.Velocity.Z, PlatformerData.Velocity.X);
 		this.Model.Rotation = new Vector3(Model.Rotation.X, lookDirection.Angle(), Model.Rotation.Z);
-    }
+	}
 
 	public void ApplyVerticalForce(float force)
 	{
 		PlatformerData.Velocity = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z);
 		this.actionState = PlatformerState.PlayerActionStateEnumerator.FALL;
-        currentState = PlatformerState.GetStateClass(actionState);
-        PlatformerData.Velocity += new Vector3(0, force, 0);
+		currentState = PlatformerState.GetStateClass(actionState);
+		PlatformerData.Velocity += new Vector3(0, force, 0);
 	}
 
-    void Debug()
-    {
-        db = GetNode<al_debuginfo>("/root/AlDebuginfo");
+	void Debug()
+	{
+		db = GetNode<al_debuginfo>("/root/AlDebuginfo");
 
-        db.debugInfo.Add(actionState.ToString());
+		db.debugInfo.Add(actionState.ToString());
 		Vector3 hSpeed = new Vector3(PlatformerData.Velocity.X, 0, PlatformerData.Velocity.Z);
 		//db.debugInfo.Add(hSpeed.Length().ToString() + "u/s");
-    }
+	}
 }

@@ -23,6 +23,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
             //SHARED STATES
             NONE,
             DIVING,
+            GOTITEM,
             //GROUNDED STATES
             ROLLOUT,
             FASTROLLOUT,
@@ -63,6 +64,8 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                     return new PS_Rollout();
                 case PlayerActionStateEnumerator.LEDGEGRAB:
                     return new PS_LedgeGrab();
+                case PlayerActionStateEnumerator.GOTITEM:
+                    return new PS_GotItem();
             }
 
             return null;

@@ -45,7 +45,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller.states.airstates
                 //Grounded dive rollout
                 if(!rolloutTimer.Expired())
                 {
-                    fastRollout = true;
+                    rollout = true;
                 } else
                 {
                     rollout = true;

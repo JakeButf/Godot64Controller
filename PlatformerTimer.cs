@@ -45,7 +45,7 @@ namespace n64proofofconcept.scripts.player.platformercontroller
 
 		public bool Expired()
 		{
-			return endTime >= time;
+			return endTime <= time;
 		}
 	}
 }

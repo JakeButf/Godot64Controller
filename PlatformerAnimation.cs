@@ -50,6 +50,12 @@ namespace n64proofofconcept.scripts.player.platformercontroller
                 case PlatformerState.PlayerActionStateEnumerator.LEDGEGRAB:
                     anim.Play("wallhug_001", 0.5); //TODO: Ledgegrab animation
                     break;
+				case PlatformerState.PlayerActionStateEnumerator.GOTITEM:
+					if (PlatformerData.Grounded)
+						anim.Play("win", 0.5);
+					else
+						anim.Play("fall", 0.5);
+					break;
             }
 		}
 	}
